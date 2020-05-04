@@ -10,31 +10,34 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TuneIcon from '@material-ui/icons/Tune';
 import ExposureIcon from '@material-ui/icons/Exposure';
 
+import {Link} from 'react-router-dom';
 
 
 
-const Lista_Menu = () => {
+const ListaMenu = () => {
     return (
         <div>
                 
                 <Divider />
                 <List component="nav">
-                    <ListItem button>
-                        <ListItemIcon>
-                            <TuneIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Filtros'>                        
-                        </ListItemText>
-                    </ListItem>
-
-                    <ListItem button>
-                        <ListItemIcon>
-                            <ExposureIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary='Operaciones'>                        
-                        </ListItemText>
-                    </ListItem>
-                    
+                    <Link to="/filtros">
+                        <ListItem button>                        
+                            <ListItemIcon>
+                                <TuneIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary='Filtros'>                        
+                            </ListItemText>                        
+                        </ListItem>
+                    </Link>
+                    <Link to="/">
+                        <ListItem button>
+                            <ListItemIcon>
+                                <ExposureIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary='Operaciones'>                        
+                            </ListItemText>
+                        </ListItem>
+                    </Link>
                     <Divider />
                 </List>
    
@@ -42,4 +45,4 @@ const Lista_Menu = () => {
     )
 }
 
-export default Lista_Menu
+export default ListaMenu
