@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Drawer, Button, ThemeProvider} from '@material-ui/core';
 
 import ListaMenu from '../Component/Lista_Menu';
+import Table from '../Component/Table';
 
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,12 +54,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
   },
   content: {
+    /*
     backgroundImage : `url(${image})`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
     backgroundSize:"cover",
-    backgroundColor: "#FFFFFF",
+    */
+    backgroundColor: "#fce4ec",
     width: "100%",
     height: "700px",
     flexGrow: 1,
@@ -70,10 +73,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -drawerWidth,
   },
   contentShift: {
+    /*
     background : `url(${image})`,
-    backgroundRepeat: "no-repeat",
-    
-    backgroundSize:"cover",
+    backgroundRepeat: "no-repeat",    
+    backgroundSize:"cover",*/
+    backgroundColor: "#fce4ec",
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -86,8 +90,21 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: '#bdbdbd'
   },
-  drawerHeader: {
+  drawerHeader_Menu: {
+    backgroundColor: '#616161',
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 2),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'space-between',
+    Typography: {
+      align: "left",
+    },
+  },
+  drawerHeader_Content: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 2),
@@ -116,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Operaciones_view() {
+export default function Operaciones() {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -171,7 +188,7 @@ export default function Operaciones_view() {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}>
+          <div className={classes.drawerHeader_Menu}>
             <Typography variant="h6" color="initial" align="left">
               Menu
             </Typography>
@@ -188,19 +205,8 @@ export default function Operaciones_view() {
                 [classes.contentShift]: open,
               })}
             >
-                <div className={classes.drawerHeader} />
-                <Typography paragraph>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                  facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                  gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                  donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                  adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                  Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                  imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                  arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                  donec massa sapien faucibus et molestie ac.
-                </Typography>
+                <div className={classes.drawerHeader_Content} />
+                <Table/>
         </main>
       </div>
     );

@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 
 //Sites
 import Operaciones from './site/Operaciones'
 import Filtros from './site/Filtros'
+
+//REDUX 
+import {Provider} from 'react-redux'
+//import {provider} from 'react-redux';
+import store from './store'
 
 
 function App() {

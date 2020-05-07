@@ -18,8 +18,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import image from '../Images/food.jpg'
 /*
+import image from '../Images/food.jpg'
+
     palette: {
         primary: {
             main: '#b71c1c',
@@ -52,12 +53,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
   },
   content: {
+    /*
     backgroundImage : `url(${image})`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
     backgroundSize:"cover",
-    backgroundColor: "#FFFFFF",
+    */
+    backgroundColor: "#fce4ec",
     width: "100%",
     height: "700px",
     flexGrow: 1,
@@ -69,10 +72,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -drawerWidth,
   },
   contentShift: {
+    /*
     background : `url(${image})`,
-    backgroundRepeat: "no-repeat",
-    
+    backgroundRepeat: "no-repeat",    
     backgroundSize:"cover",
+    */
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -85,8 +89,21 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: '#bdbdbd'
   },
-  drawerHeader: {
+  drawerHeader_Menu: {
+    backgroundColor: '#616161',
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 2),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'space-between',
+    Typography: {
+      align: "left",
+    },
+  },
+  drawerHeader_Content: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 2),
@@ -154,7 +171,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function App_Bar() {
+export default function Filtros() {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -170,7 +187,6 @@ export default function App_Bar() {
     console.log("Filtos VGTS");
 
     return (
-
         
       <div className={classes.root}>
         <CssBaseline />
@@ -230,7 +246,7 @@ export default function App_Bar() {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}>
+          <div className={classes.drawerHeader_Menu}>
             <Typography variant="h6" color="initial" align="left">
               Menu
             </Typography>
@@ -247,7 +263,7 @@ export default function App_Bar() {
                 [classes.contentShift]: open,
               })}
             >
-                <div className={classes.drawerHeader} />
+                <div className={classes.drawerHeader_Content} />
                 <Typography paragraph>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                   ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
