@@ -1,57 +1,15 @@
 import React from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
+import { Hidden} from '@material-ui/core';
 
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Drawer, Button, ThemeProvider} from '@material-ui/core';
-
-import ListaMenu from '../Component/Lista_Menu';
+import Navbar from '../Component/Navbar'
+import DrawerCajon from '../Component/Drawer_cajon';
 import Table from '../Component/Table';
-
-import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import themeButton from '../Themes/ThemeConfig_Button';
-import image from '../Images/food.jpg'
-
-const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display:'flex',
-    flexGrow: 1,
-  },
-  appBar: {
-    background:'#F03637',
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  button: {
-    margin:  theme.spacing(2),
-    palette :{
-      primary :{
-        main: '#701919'
-      }
-    },
-  },
-  ButtonMenuBack: {
-    padding: theme.spacing(0),
+    
   },
   content: {
     /*
@@ -60,153 +18,69 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
     backgroundSize:"cover",
-    */
-    backgroundColor: "#fce4ec",
     width: "100%",
     height: "700px",
-    flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    /*
-    background : `url(${image})`,
-    backgroundRepeat: "no-repeat",    
-    backgroundSize:"cover",*/
+    */
     backgroundColor: "#fce4ec",
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: '#bdbdbd'
-  },
-  drawerHeader_Menu: {
-    backgroundColor: '#616161',
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 2),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'space-between',
-    Typography: {
-      align: "left",
-    },
-  },
-  drawerHeader_Content: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 2),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'space-between',
-    Typography: {
-      align: "left",
-    },
-  },
-  hide: {
-    display: 'none',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
     flexGrow: 1,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    padding: theme.spacing(3),
   },
+  toolbar: {    
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 2),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'space-between',
+    Typography: {
+      align: "left",
+    },}
 }));
 
-export default function Operaciones() {
+export default function Operaciones(props) {
 
     const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+    //Drawer
+    const [openDrawer, setOpenDrawer] = React.useState(false);
 
+    const handleopenDrawer = () => {
+      setOpenDrawer(!openDrawer) 
+    }
+    const handlecloseDrawer = () => {
+      console.log("handle close")
+      setOpenDrawer(false)
+    }
+
+    //Modal
+    //const [openModal, setOpenModal] = React.useState(false);
+
+    console.log();
     console.log("operaciones vgts");
     return (
       <div className={classes.root}>
-        <CssBaseline />
-        <AppBar 
-          position="fixed" 
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              onClick={handleDrawerOpen}
-              color="inherit"
-              aria-label="open drawer"
-              className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Operación de Contadores
-            </Typography>
-            <ThemeProvider theme={themeButton}>
-            <Button variant="contained" color="primary" className={classes.button}>
-              Sumar contadores
-            </Button>
-            <Button ml={1} variant="contained" color="primary">
-              Agregar contador
-            </Button>            
-            </ThemeProvider>          
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader_Menu}>
-            <Typography variant="h6" color="initial" align="left">
-              Menu
-            </Typography>
-            <IconButton onClick={handleDrawerClose} className={classes.ButtonMenuBack}>              
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-
-          <ListaMenu></ListaMenu>
-
-        </Drawer>
-        <main
-              className={clsx(classes.content, {
-                [classes.contentShift]: open,
-              })}
-            >
-                <div className={classes.drawerHeader_Content} />
-                <Table/>
+        
+        <Navbar handleopenDrawer={handleopenDrawer}/>
+        <Hidden xsDown>
+          <DrawerCajon
+            variant="permanent"
+            open={true}
+          />
+        </Hidden>
+        <Hidden smUp>
+          <DrawerCajon
+            variant="temporary"
+            open={openDrawer}
+            onClose={handleopenDrawer}
+            onCloseIcon={handlecloseDrawer}
+          />
+        </Hidden>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+            <Table/>
         </main>
       </div>
     );

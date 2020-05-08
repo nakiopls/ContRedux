@@ -3,7 +3,7 @@ var app         = express();
 var bodyParser  = require("body-parser");
 var compression = require("compression");
 var morgan      = require("morgan");
-var PORT        = Number( process.env.PORT || 4000 );
+var PORT        = Number( process.env.PORT || 5000 );
 var counters    = require("./lib/counters");
 
 app.use(morgan("combined"));
