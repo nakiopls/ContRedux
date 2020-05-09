@@ -1,8 +1,8 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 //ayuda a realizar peticiones asincronas
 import thunk from 'redux-thunk';
-//import reducer from './reducers';
-/*
+import reducer from './Reducers';
+
 const store = createStore(
     reducer,
     compose( applyMiddleware(thunk),
@@ -17,4 +17,3 @@ const store = createStore(
 
 export default store;
 
-*/

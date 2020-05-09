@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import themeButton from '../Themes/ThemeConfig_Button';
 
+import ModalAddUser from '../Component/ModalAddUser'
 
 const drawerWidth = 240;
 
@@ -50,6 +51,8 @@ const Navbar = (props) => {
 
     const classes = useStyles();
 
+    //console.log ("props from navbar", props);
+
     return (
 
         <AppBar
@@ -75,9 +78,18 @@ const Navbar = (props) => {
                         Sumar contadores
                         </Button>
                     {/*</ThemeProvider><Button ml={1} variant="contained" color="primary" onClick={handleModalOpen}>*/}
-                    <Button ml={1} variant="contained" color="primary" >
+                    <Button 
+                        ml={1} 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={() => props.handleopenModal()}    
+                    >
                         Agregar contador
-                        </Button>
+                    </Button>
+                    <ModalAddUser
+                        open={props.openModal}  
+                        handlecloseModal={props.handlecloseModal}                     
+                    />
                 </ThemeProvider>
             </Toolbar>
         </AppBar>

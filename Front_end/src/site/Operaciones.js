@@ -46,24 +46,33 @@ export default function Operaciones(props) {
     const classes = useStyles();
     //Drawer
     const [openDrawer, setOpenDrawer] = React.useState(false);
+    //Modal
+    const [openModal, setOpenModal] = React.useState(false);
 
     const handleopenDrawer = () => {
       setOpenDrawer(!openDrawer) 
     }
     const handlecloseDrawer = () => {
-      console.log("handle close")
       setOpenDrawer(false)
     }
 
-    //Modal
-    //const [openModal, setOpenModal] = React.useState(false);
+    const handleopenModal = () => {
+      setOpenModal(!openModal) 
+    }
+    const handlecloseModal = () => {
+      setOpenModal(false)
+    }
 
-    console.log();
     console.log("operaciones vgts");
     return (
       <div className={classes.root}>
         
-        <Navbar handleopenDrawer={handleopenDrawer}/>
+        <Navbar 
+          handleopenDrawer={handleopenDrawer}
+          handleopenModal={handleopenModal}
+          handlecloseModal={handlecloseModal}
+          openModal={openModal}
+        />
         <Hidden xsDown>
           <DrawerCajon
             variant="permanent"

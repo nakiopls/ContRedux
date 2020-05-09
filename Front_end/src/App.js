@@ -19,14 +19,16 @@ function App() {
   return (
 
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Operaciones/>
-        </Route>
-        <Route path="/filtros">
-          <Filtros />
-        </Route>
-      </Switch>
+      <Provider store={store}>
+        <Switch>
+          <Route path="/" exact>
+            <Operaciones/>
+          </Route>
+          <Route path="/filtros">
+            <Filtros />
+          </Route>
+        </Switch>
+      </Provider>  
     </Router>
   );
 }
