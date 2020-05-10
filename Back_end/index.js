@@ -5,6 +5,9 @@ var compression = require("compression");
 var morgan      = require("morgan");
 var PORT        = Number( process.env.PORT || 5000 );
 var counters    = require("./lib/counters");
+var cors        = require('cors')
+
+app.use(cors())
 
 app.use(morgan("combined"));
 app.use(bodyParser.json());
