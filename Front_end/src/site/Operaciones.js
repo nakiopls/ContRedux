@@ -1,10 +1,14 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import { Hidden} from '@material-ui/core';
+
+import {useSelector,useDispatch} from 'react-redux';
+import {obtenerTitulosAction} from '../Actions/titleAction'
 
 import Navbar from '../Component/Navbar'
 import DrawerCajon from '../Component/Drawer_cajon';
 import Table from '../Component/Table';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +52,22 @@ export default function Operaciones(props) {
     const [openDrawer, setOpenDrawer] = React.useState(false);
     //Modal
     const [openModal, setOpenModal] = React.useState(false);
+    
+    const dispatch = useDispatch();
 
+    useEffect( ()=> {
+
+      //consultar a la api
+      const cargarTitulos = () => dispatch( obtenerTitulosAction() ) 
+      cargarTitulos();
+      // eslint-disable-next-line 
+    },[]);
+
+    const titulos = useSelector(state => state.contador.contadores);
+
+    console.log("useSelector from operaciones",titulos)
+
+    //Handles Drawer
     const handleopenDrawer = () => {
       setOpenDrawer(!openDrawer) 
     }
@@ -56,12 +75,14 @@ export default function Operaciones(props) {
       setOpenDrawer(false)
     }
 
+    //Handles Modal
     const handleopenModal = () => {
       setOpenModal(!openModal) 
     }
     const handlecloseModal = () => {
       setOpenModal(false)
     }
+
 
     console.log("operaciones vgts");
     return (
@@ -89,7 +110,9 @@ export default function Operaciones(props) {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-            <Table/>
+            <Table 
+              titulos={titulos}
+            />              
         </main>
       </div>
     );

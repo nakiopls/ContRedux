@@ -12,21 +12,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch} from 'react-redux';
 import Swal from 'sweetalert2';
 
-import crearNuevoTituloAction from '../Actions/titleAction'
+import {crearNuevoTituloAction} from '../Actions/titleAction'
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
 
 export default function ModalAddUser(props) {
     
@@ -49,13 +36,15 @@ export default function ModalAddUser(props) {
                 title: 'El campo no puede ser vacio',
                 text: 'intente nuevamente'
             })
-
+            props.handlecloseModal();
             return;
         }
 
         agregarTitulo({
             title
         });
+
+        guardarTitle('');
 
         props.handlecloseModal();
 
