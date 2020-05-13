@@ -4,10 +4,13 @@ import { Hidden} from '@material-ui/core';
 
 import {useSelector,useDispatch} from 'react-redux';
 import {obtenerTitulosAction} from '../Actions/titleAction'
+import Swal from 'sweetalert2';
+
 
 import Navbar from '../Component/Navbar'
 import DrawerCajon from '../Component/Drawer_cajon';
 import Table from '../Component/Table';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +68,29 @@ export default function Operaciones(props) {
 
     const titulos = useSelector(state => state.contador.contadores);
 
-    console.log("useSelector from operaciones",titulos)
+    const SumaTotalContadores = () => {
+
+      let Sum = 0;
+
+      if (titulos.length === 0){
+        Swal.fire({
+          icon:'error',
+          title: 'No hay contadores',
+          text: 'Agregar contadores e intentar nuevamente'
+      })
+      }
+      else{      
+        titulos.map(contador => Sum= Sum + contador.count)
+        Swal.fire({
+          text: "La suma total de los contadores es "+Sum
+        })
+        console.log("SumaTotalContadores",Sum)
+        Sum = 0;
+      }
+
+    }
+
+    //console.log("useSelector from operaciones",titulos)
 
     //Handles Drawer
     const handleopenDrawer = () => {
@@ -93,6 +118,7 @@ export default function Operaciones(props) {
           handleopenModal={handleopenModal}
           handlecloseModal={handlecloseModal}
           openModal={openModal}
+          SumaTotalContadores={SumaTotalContadores}
         />
         <Hidden xsDown>
           <DrawerCajon

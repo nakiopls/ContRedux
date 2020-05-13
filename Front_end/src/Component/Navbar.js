@@ -74,7 +74,11 @@ const Navbar = (props) => {
                     Operación de Contadores
                     </Typography>
                 <ThemeProvider theme={themeButton}>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        className={classes.button}
+                        onClick={() => props.SumaTotalContadores()}>
                         Sumar contadores
                         </Button>
                     {/*</ThemeProvider><Button ml={1} variant="contained" color="primary" onClick={handleModalOpen}>*/}

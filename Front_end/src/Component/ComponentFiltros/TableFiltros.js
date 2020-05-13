@@ -16,7 +16,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-import Contador from '../Component/Contador'
+import Contador from '../ComponentFiltros/ContadorFiltros'
 
 /*
 function CrearContadores() {
@@ -180,7 +180,6 @@ export default function CustomPaginationActionsTable(props) {
               <StyledTableCell align="center">ID</StyledTableCell>
               <StyledTableCell align="center">Title</StyledTableCell>
               <StyledTableCell align="center">Contador</StyledTableCell>
-              <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
         </TableHead>
         <TableBody>
