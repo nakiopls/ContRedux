@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import MaterialTable from 'material-table';
+import React from 'react';
+
+import swal from 'sweetalert2';
+
 
 import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -160,6 +162,19 @@ export default function CustomPaginationActionsTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  /*  ********VALIDACION CANTIDAD DE CONTADORES************
+
+  if (Contadores.length === 0) {
+    return (            
+      swal.fire({
+        icon:'error',
+        title: 'Cago compa',
+        text: 'intenta de nuevo'
+      })
+    )
+  };
+  */
 
   return (
     <TableContainer component={Paper}>

@@ -5,13 +5,16 @@ import {
     OBTENER_PRODUCTO_TITULO,
     OBTENER_PRODUCTO_INCREMENTAR,
     OBTENER_PRODUCTO_DESINCREMENTAR, 
-    AGREGAR_TITULO_EXITO
+    AGREGAR_TITULO_EXITO,
+    OBTENER_CONTADOR_ELIMINAR,
+    CONTADOR_ELIMINADO_EXITO
 
 
 } from '../types'
 
 const initialState = {
-    contadores: []
+    contadores: [],
+    contadoreliminar: null,
 
 }
 
@@ -30,7 +33,18 @@ export default function (state =initialState,action) {
             return{
                 ...state,
                 contadores: action.payload
-            }                   
+            }
+        case OBTENER_CONTADOR_ELIMINAR:
+            return{
+                ...state,
+                contadoreliminar: action.payload
+            }
+        case CONTADOR_ELIMINADO_EXITO:
+            return{
+                ...state,
+                contadores: state.contadores.filter(contador => contador.id !== state.contadoreliminar),
+                productoeliminar : null
+            }                     
         default:
             return state;
     }

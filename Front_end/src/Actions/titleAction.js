@@ -5,11 +5,12 @@ import {
     COMENZAR_DESCARGA_TITULO_EXITO,
     OBTENER_PRODUCTO_TITULO,
     OBTENER_PRODUCTO_INCREMENTAR,
-    OBTENER_PRODUCTO_DESINCREMENTAR 
+    OBTENER_PRODUCTO_DESINCREMENTAR,
+    OBTENER_CONTADOR_ELIMINAR,
+    CONTADOR_ELIMINADO_EXITO
 
 } from '../types'
 
-import swal from 'sweetalert2';
 import Swal from 'sweetalert2';
 
 export  function crearNuevoTituloAction(title){
@@ -97,4 +98,41 @@ const descargarTitulos = () => ({
 const descargaTitulosExitosa = contadores => ({
     type: COMENZAR_DESCARGA_TITULO_EXITO, 
     payload: contadores    
+})
+
+export function borrarContadorAction(id) {
+    return async (dispatch) => {
+        dispatch(obtenerProductoEliminar(id));
+        fetch('http://localhost:5000/api/v1/counter', {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*'
+                
+            },
+            body: JSON.stringify({
+                id
+            })
+            })                       
+            .then(res => console.log(res))
+
+            dispatch(eliminarContadorExito());
+
+            Swal.fire(
+                'borrado',
+                'el contador se elimino correctamente',
+                'success'
+            )
+
+    }
+}
+
+const obtenerProductoEliminar = id => ({
+    type: OBTENER_CONTADOR_ELIMINAR,
+    payload: id
+})
+
+const eliminarContadorExito = () => ({
+    type: CONTADOR_ELIMINADO_EXITO
 })
