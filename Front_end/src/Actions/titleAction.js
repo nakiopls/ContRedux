@@ -7,7 +7,11 @@ import {
     OBTENER_PRODUCTO_INCREMENTAR,
     OBTENER_PRODUCTO_DESINCREMENTAR,
     OBTENER_CONTADOR_ELIMINAR,
-    CONTADOR_ELIMINADO_EXITO
+    CONTADOR_ELIMINADO_EXITO,
+    REALIZAR_SUMA_CONTADOR,
+    SUMA_CONTADOR_EXITO,
+    REALIZAR_RESTA_CONTADOR,
+    RESTA_CONTADOR_EXITO
 
 } from '../types'
 
@@ -135,4 +139,72 @@ const obtenerProductoEliminar = id => ({
 
 const eliminarContadorExito = () => ({
     type: CONTADOR_ELIMINADO_EXITO
+})
+
+
+export function SumarContadorAction (id) {
+
+    return async (dispatch) => {
+        dispatch(SumarContador())
+        fetch('http://localhost:5000/api/v1/counter/inc', {            
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*'                
+            },
+            body: JSON.stringify({
+                id
+            })
+            })
+            .then(res => res.json())
+            .then(res => dispatch(SumarContadorExito(res)))
+            .then(res => console.log(res))
+
+
+    }
+
+}
+
+const SumarContador = () => ({
+    type: REALIZAR_SUMA_CONTADOR
+})
+
+const SumarContadorExito = contador => ({
+    type: SUMA_CONTADOR_EXITO,
+    payload: contador
+})
+
+
+export function RestarContadorAction (id) {
+
+    return async (dispatch) => {
+        dispatch(RestarContador())
+        fetch('http://localhost:5000/api/v1/counter/dec', {            
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin':'*'                
+            },
+            body: JSON.stringify({
+                id
+            })
+            })
+            .then(res => res.json())
+            .then(res => dispatch(RestarContadorExito(res)))
+            .then(res => console.log(res))
+
+
+    }
+
+}
+
+const RestarContador = () => ({
+    type: REALIZAR_RESTA_CONTADOR
+})
+
+const RestarContadorExito = contador => ({
+    type: RESTA_CONTADOR_EXITO,
+    payload: contador
 })

@@ -184,6 +184,7 @@ export default function CustomPaginationActionsTable(props) {
               <StyledTableCell align="center">ID</StyledTableCell>
               <StyledTableCell align="center">Title</StyledTableCell>
               <StyledTableCell align="center">Contador</StyledTableCell>
+              <StyledTableCell align="center">Actions</StyledTableCell>
             </TableRow>
         </TableHead>
         <TableBody>

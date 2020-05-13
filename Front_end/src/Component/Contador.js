@@ -17,11 +17,7 @@ import PlusOneIcon from '@material-ui/icons/PlusOne';
 import ExposureNeg1Icon from '@material-ui/icons/ExposureNeg1';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import {borrarContadorAction} from '../Actions/titleAction'
-
-//Redux
-//import { useDispatch } from 'react-redux';
-//import {borrarProductoAction,obtenerProductoEditar} from '../actions/productoActions';
+import {borrarContadorAction,SumarContadorAction,RestarContadorAction} from '../Actions/titleAction'
 
 /*
     {
@@ -56,8 +52,7 @@ const Contador = ({contador}) => {
     const {id,title,count} = contador
 
     const confirmarEliminarContador = id =>{
-
-        console.log("id from contador",id);
+       
         Swal.fire({
             title:'seguro?',
             text: "no se podra recuperar",
@@ -75,35 +70,16 @@ const Contador = ({contador}) => {
         })
 
     }
+    const SumarContador = id => {
 
-    //const dispatch = useDispatch();
-
-    /*
-    const confirmarEliminarContador = id => {
-
-        Swal.fire({
-            title:'seguro?',
-            text: "nos e podra recuperar",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'si, borrar',
-            cancelButtonText: 'cancelar '
-        }).then((result) => {
-            if (result.value) {
-                //Pasar al action
-                dispatch( borrarProductoAction(id) );
-            }
-        })         
+        dispatch( SumarContadorAction(id) )
     }
-    */
 
-    /*   SUMAR EN CONTADOR
-    const redireccionarEdicion = producto => {
-    dispatch( obtenerProductoEditar(producto) );
-    history.push(`/producto/editar/${producto.id}`)
-    */
+    const RestarContador = id => {
+
+        dispatch( RestarContadorAction(id) )
+    }
+
     return(
         
             <TableRow >
@@ -113,11 +89,22 @@ const Contador = ({contador}) => {
                 <TableCell  align="center">
                     {title.title}
                 </TableCell>
+                <TableCell  align="center">
+                    <Typography className={classes.title}>                    
+                            Valor Contador: {count}
+                    </Typography>
+                </TableCell>
                 <TableCell   align="center" >              
-                    <IconButton  style={{ color: green[500] }}>
+                    <IconButton  
+                        style={{ color: green[500] }}
+                        onClick={() => SumarContador(id)}
+                        >
                         <PlusOneIcon/>
                     </IconButton>
-                    <IconButton  style={{ color: red[500] }}>
+                    <IconButton  
+                    style={{ color: red[500] }}
+                    onClick={() => RestarContador(id)}
+                    >
                         <ExposureNeg1Icon/>
                     </IconButton>
                     <IconButton 
@@ -125,9 +112,7 @@ const Contador = ({contador}) => {
                     >
                         <DeleteIcon/>
                     </IconButton>
-                    <Typography className={classes.title}>                    
-                        Valor Contador: {count}
-                    </Typography>
+
                 </TableCell>
             </TableRow>
     )
