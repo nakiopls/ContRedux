@@ -2,13 +2,11 @@ import React,{useEffect}  from 'react';
 import { fade, makeStyles, useTheme} from '@material-ui/core/styles';
 import {useSelector,useDispatch} from 'react-redux';
 
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 
 import { Drawer} from '@material-ui/core';
 import ListaMenu from '../Component/Lista_Menu';
+import NavbarFiltros from '../Component/ComponentFiltros/NavBarFiltros'
 import TableFiltros from  '../Component/ComponentFiltros/TableFiltros'
 
 import {obtenerTitulosAction} from '../Actions/titleAction'
@@ -17,8 +15,7 @@ import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -179,9 +176,19 @@ export default function Filtros() {
 
     const classes = useStyles();
     const theme = useTheme();
+
+    // Abrir Drawer
     const [open, setOpen] = React.useState(false);
+    // Filtro del Select
+    const [select, setSelect] = React.useState("");
+    // Palabra a filtrar
+    const [search,setSearch] = React.useState("");
+    // Resultado de la filtracion
+    const [searchResult,setSearchResult] = React.useState([]);
 
     const dispatch = useDispatch();
+
+
 
     useEffect( ()=> {
 
@@ -192,6 +199,15 @@ export default function Filtros() {
     },[]);
 
     const titulos = useSelector(state => state.contador.contadores);
+
+    const titulos_aux = useSelector(state => state.contador.contadores);
+
+    console.log("resultado select", select);
+
+    const handleChange = event => {
+      //console.log("input : ",event.target.value)
+      setSearch(event.target.value);
+    };
 
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -205,53 +221,18 @@ export default function Filtros() {
         
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar 
-          position="fixed" 
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              onClick={handleDrawerOpen}
-              color="inherit"
-              aria-label="open drawer"
-              className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Filtro de Contadores
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
-          </Toolbar>
-        </AppBar>
+        {/**AGREGAR NAVBAR_FILTRO */}
+        <NavbarFiltros
+          handleDrawerOpen={handleDrawerOpen}
+          handleDrawerClose={handleDrawerClose}  
+          open={open}
+          search={search}
+          handleChange={handleChange}
+          contadores={titulos_aux}
+          setSearchResult={setSearchResult}
+          handleChangeSelect={setSelect}
+          select={select}
+        />
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -279,7 +260,14 @@ export default function Filtros() {
               })}
             >
                 <div className={classes.drawerHeader_Content} />
-                <TableFiltros titulos={titulos}/>
+                
+                {searchResult.length !== 0 ? 
+                  
+                  <TableFiltros titulos={searchResult}/> :
+
+                  <TableFiltros titulos={titulos}/>                
+                }
+                                
         </main>
       </div>
     );
