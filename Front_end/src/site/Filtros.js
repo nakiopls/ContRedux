@@ -202,10 +202,8 @@ export default function Filtros() {
 
     const titulos_aux = useSelector(state => state.contador.contadores);
 
-    console.log("resultado select", select);
 
     const handleChange = event => {
-      //console.log("input : ",event.target.value)
       setSearch(event.target.value);
     };
 
@@ -216,12 +214,63 @@ export default function Filtros() {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    const ordenarArregloAscendente = (arreglo) => {
+
+      arreglo.sort((a,b) => (a.count-b.count))
+
+    }
+
+    const ordenarArregloDescendente = (arreglo) => {
+
+      arreglo.sort((a,b) => (b.count-a.count))
+
+    }
+
+    const ordenarArregloAlfabeticamente = (arreglo) => {
+
+      arreglo.sort((a,b) => (a.title.title.localeCompare(b.title.title)))
+
+    }
+
+    //REALIZAR ORDENAMIENTOS
+    const renderSwitch = (params) => {
+
+      switch (params.value) {
+        case "Alfabeticamente":
+          {if(searchResult.length !== 0)
+            return ordenarArregloAlfabeticamente(searchResult)
+           else{
+            return ordenarArregloAlfabeticamente(titulos)            
+           }
+          }
+          //return console.log("switch: ",params.value)
+        case "MayorAMenor":
+          {if(searchResult.length !== 0)
+            return ordenarArregloDescendente(searchResult)
+           else{
+             return ordenarArregloDescendente(titulos)             
+           }
+          }
+          //return console.log("switch: ",params.value)
+        case "MenorAMayor":
+          {if(searchResult.length !== 0)
+            return ordenarArregloAscendente(searchResult)
+           else{
+            return ordenarArregloAscendente(titulos)            
+           }
+          }
+          //return console.log("switch: ",params.value)                        
+        default:
+          console.log("swicht default");
+      }      
+
+    }
     
     return (
         
       <div className={classes.root}>
         <CssBaseline />
-        {/**AGREGAR NAVBAR_FILTRO */}
         <NavbarFiltros
           handleDrawerOpen={handleDrawerOpen}
           handleDrawerClose={handleDrawerClose}  
@@ -260,7 +309,8 @@ export default function Filtros() {
               })}
             >
                 <div className={classes.drawerHeader_Content} />
-                
+                {renderSwitch(select)}
+
                 {searchResult.length !== 0 ? 
                   
                   <TableFiltros titulos={searchResult}/> :

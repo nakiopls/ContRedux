@@ -1,7 +1,7 @@
 import React,{useEffect}  from 'react'
 
 import Select from 'react-select';
-import {fade,makeStyles,useTheme} from '@material-ui/core/styles';
+import {fade,makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 import AppBar from '@material-ui/core/AppBar'
@@ -173,33 +173,22 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
 
     const classes = useStyles();
-    //const theme = useTheme();
-
-    const selectedOption = props.select;
 
     const options = [
         { value: 'Alfabeticamente', label: 'Alfabeticamente' },
-        { value: 'Mayor a menor', label: 'Mayor a menor' },
-        { value: 'Menor a mayor', label: 'Menor a mayor' },
+        { value: 'MayorAMenor', label: 'Mayor a menor' },
+        { value: 'MenorAMayor', label: 'Menor a mayor' },
       ];
 
-    //console.log ("props from navbar", props);
+    const {contadores,search,setSearchResult} = props;
+    
 
-    //console.log("contadores.[0]",props.contadores[0]);
-
-    //props.contadores ? props.contadores[0].id : null;
 
     useEffect( ()=> {
-        //console.log("------------------------");
-        const result = props.contadores.filter(Contador => Contador.title.title.toLowerCase().includes(props.search));
-        //console.log("resultado navbar", result);
-        props.setSearchResult(result);
-    },[props.search])
-
-    //(props.contadores).map((cont) => 
-    
-    //console.log("resultado navbar",props.search)
-    //)
+        const result = contadores.filter(Contador => Contador.title.title.toLowerCase().includes(search));
+        setSearchResult(result);
+        // eslint-disable-next-line        
+    },[search])
 
     return (
 
