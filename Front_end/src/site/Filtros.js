@@ -1,15 +1,15 @@
-import React,{useEffect}  from 'react';
-import { fade, makeStyles, useTheme} from '@material-ui/core/styles';
-import {useSelector,useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 
-import { Drawer} from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import ListaMenu from '../Component/Lista_Menu';
 import NavbarFiltros from '../Component/ComponentFiltros/NavBarFiltros'
-import TableFiltros from  '../Component/ComponentFiltros/TableFiltros'
+import TableFiltros from '../Component/ComponentFiltros/TableFiltros'
 
-import {obtenerTitulosAction} from '../Actions/titleAction'
+import { obtenerTitulosAction } from '../Actions/titleAction'
 
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -27,16 +27,16 @@ import image from '../Images/food.jpg'
             main: '#b71c1c',
         }        
       },
-*/ 
+*/
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display:'flex',
+    display: 'flex',
     flexGrow: 1,
   },
   appBar: {
-    background:'#F03637',
+    background: '#F03637',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -174,151 +174,212 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Filtros() {
 
-    const classes = useStyles();
-    const theme = useTheme();
+  const classes = useStyles();
+  const theme = useTheme();
 
-    // Abrir Drawer
-    const [open, setOpen] = React.useState(false);
-    // Filtro del Select
-    const [select, setSelect] = React.useState("");
-    // Palabra a filtrar
-    const [search,setSearch] = React.useState("");
-    // Resultado de la filtracion
-    const [searchResult,setSearchResult] = React.useState([]);
-
-    const dispatch = useDispatch();
-
-
-
-    useEffect( ()=> {
-
-      //consultar a la api
-      const cargarTitulos = () => dispatch( obtenerTitulosAction() ) 
-      cargarTitulos();
-      // eslint-disable-next-line 
-    },[]);
-
-    const titulos = useSelector(state => state.contador.contadores);
-
-    const titulos_aux = useSelector(state => state.contador.contadores);
+  // Abrir Drawer
+  const [open, setOpen] = React.useState(false);
+  // Numero a comparar
+  const [number, setNumber] = React.useState("");
+  const [numberMayorResult, setNumberMayorResult] = React.useState([]);
+  const [numberMenorResult, setNumberMenorResult] = React.useState([]);
+  // Filtro del Select
+  const [select, setSelect] = React.useState("");
+  // Palabra a filtrar
+  const [search, setSearch] = React.useState("");
+  // Resultado de la filtracion
+  const [searchResult, setSearchResult] = React.useState([]);
 
 
-    const handleChange = event => {
-      setSearch(event.target.value);
-    };
+  const dispatch = useDispatch();
 
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
 
-    const ordenarArregloAscendente = (arreglo) => {
 
-      arreglo.sort((a,b) => (a.count-b.count))
+  useEffect(() => {
 
-    }
+    //consultar a la api
+    const cargarTitulos = () => dispatch(obtenerTitulosAction())
+    cargarTitulos();
+    // eslint-disable-next-line 
+  }, []);
 
-    const ordenarArregloDescendente = (arreglo) => {
+  const titulos = useSelector(state => state.contador.contadores);
 
-      arreglo.sort((a,b) => (b.count-a.count))
+  const titulos_aux = useSelector(state => state.contador.contadores);
 
-    }
+  //console.log("numberMayor from filtros",numberMayorResult);
+  //console.log("numberMenor from filtros",numberMenorResult);
+  //console.log("number from filtros",number)
+  //console.log("select from filtros",select.value)
+  console.log("searchResult from filtros",searchResult)
 
-    const ordenarArregloAlfabeticamente = (arreglo) => {
 
-      arreglo.sort((a,b) => (a.title.title.localeCompare(b.title.title)))
-
-    }
-
-    //REALIZAR ORDENAMIENTOS
-    const renderSwitch = (params) => {
-
-      switch (params.value) {
-        case "Alfabeticamente":
-          {if(searchResult.length !== 0)
-            return ordenarArregloAlfabeticamente(searchResult)
-           else{
-            return ordenarArregloAlfabeticamente(titulos)            
-           }
-          }
-          //return console.log("switch: ",params.value)
-        case "MayorAMenor":
-          {if(searchResult.length !== 0)
-            return ordenarArregloDescendente(searchResult)
-           else{
-             return ordenarArregloDescendente(titulos)             
-           }
-          }
-          //return console.log("switch: ",params.value)
-        case "MenorAMayor":
-          {if(searchResult.length !== 0)
-            return ordenarArregloAscendente(searchResult)
-           else{
-            return ordenarArregloAscendente(titulos)            
-           }
-          }
-          //return console.log("switch: ",params.value)                        
-        default:
-          console.log("swicht default");
-      }      
-
-    }
-    
-    return (
-        
-      <div className={classes.root}>
-        <CssBaseline />
-        <NavbarFiltros
-          handleDrawerOpen={handleDrawerOpen}
-          handleDrawerClose={handleDrawerClose}  
-          open={open}
-          search={search}
-          handleChange={handleChange}
-          contadores={titulos_aux}
-          setSearchResult={setSearchResult}
-          handleChangeSelect={setSelect}
-          select={select}
-        />
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader_Menu}>
-            <Typography variant="h6" color="initial" align="left">
-              Menu
-            </Typography>
-            <IconButton onClick={handleDrawerClose} className={classes.ButtonMenuBack}>              
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-
-          <ListaMenu></ListaMenu>
-
-        </Drawer>
-        <main
-              className={clsx(classes.content, {
-                [classes.contentShift]: open,
-              })}
-            >
-                <div className={classes.drawerHeader_Content} />
-                {renderSwitch(select)}
-
-                {searchResult.length !== 0 ? 
-                  
-                  <TableFiltros titulos={searchResult}/> :
-
-                  <TableFiltros titulos={titulos}/>                
-                }
-                                
-        </main>
-      </div>
-    );
+  const handleChangeSearchResult = (arreglo) => {
+    setSearchResult(arreglo);
   }
+
+  const handleChange = event => {
+    setSearch(event.target.value);
+  };
+
+  const handleChangeNumber = event => {
+    setNumber(event.target.value);
+  }
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const ordenarArregloAscendente = (arreglo) => {
+
+    arreglo.sort((a, b) => (a.count - b.count))
+
+  }
+
+  const ordenarArregloDescendente = (arreglo) => {
+
+    arreglo.sort((a, b) => (b.count - a.count))
+
+  }
+
+  const ordenarArregloAlfabeticamente = (arreglo) => {
+
+    arreglo.sort((a, b) => (a.title.title.localeCompare(b.title.title)))
+
+  }
+
+  const mayorQue = (arreglo) => {
+
+    const aux = arreglo.filter(contador => contador.count > number)
+    //setSearchResult(aux)
+    console.log(aux)
+
+  }
+
+  const menorQue = (arreglo) => {
+
+    const aux = arreglo.filter(contador => contador.count < number)
+    //setSearchResult(aux)
+    console.log(aux)
+  }
+
+  //REALIZAR ORDENAMIENTOS
+  const renderSwitch = (params) => {
+
+    switch (params.value) {
+      case "Alfabeticamente":
+        {
+          if (searchResult.length !== 0)
+            return ordenarArregloAlfabeticamente(searchResult)
+          else {
+            return ordenarArregloAlfabeticamente(titulos)
+          }
+        }
+      //return console.log("switch: ",params.value)
+      case "MayorAMenor":
+        {
+          if (searchResult.length !== 0)
+            return ordenarArregloDescendente(searchResult)
+          else {
+            return ordenarArregloDescendente(titulos)
+          }
+        }
+      //return console.log("switch: ",params.value)
+
+      case "MenorAMayor":
+        {
+          if (searchResult.length !== 0)
+            return ordenarArregloAscendente(searchResult)
+          else {
+            return ordenarArregloAscendente(titulos)
+          }
+        }
+      //return console.log("switch: ",params.value) 
+      case "MayorQue":
+        {
+          if (searchResult.length !== 0)
+            return mayorQue(searchResult)
+          else {
+            return mayorQue(titulos)
+          }
+        }
+      case "MenorQue":
+        {
+          if (searchResult.length !== 0)
+            return menorQue(searchResult)
+          else {
+            return menorQue(titulos)
+          }
+        }
+      default:
+        console.log("swicht default");
+    }
+
+  }
+
+  return (
+
+    <div className={classes.root}>
+      <CssBaseline />
+      <NavbarFiltros
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+        handleDrawerClose={handleDrawerClose}
+        search={search}
+        handleChange={handleChange}
+        contadores={titulos_aux}
+        searchResult={searchResult}
+        handleChangeSearchResult={handleChangeSearchResult}
+        select={select}
+        handleChangeSelect={setSelect}
+        number={number}
+        handleChangeNumber={handleChangeNumber}
+        setNumberMayorResult={setNumberMayorResult}
+        setNumberMenorResult={setNumberMenorResult}
+
+      />
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader_Menu}>
+          <Typography variant="h6" color="initial" align="left">
+            Menu
+            </Typography>
+          <IconButton onClick={handleDrawerClose} className={classes.ButtonMenuBack}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+
+        <ListaMenu></ListaMenu>
+
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader_Content} />
+        {renderSwitch(select)}
+        {/*console.log("lenght",searchResult.length)*/}
+        {searchResult.length !== 0 ?
+
+
+          <TableFiltros titulos={searchResult} /> :
+
+          <TableFiltros titulos={titulos} />
+        }
+
+      </main>
+    </div>
+  );
+}
