@@ -1,4 +1,4 @@
-# CRUD's Counter in Redux 
+# Counter CRUD in Redux 
 
 
 With:
